@@ -13,11 +13,13 @@ import (
 	"go.opentelemetry.io/contrib/propagators/aws/xray"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
+	semconv "go.opentelemetry.io/otel/semconv/v1.4.0"
 
 	"github.com/prabhatsharma/open-telemetry1/pkg/routes"
 	// "go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
@@ -86,11 +88,18 @@ func initTracer() *sdktrace.TracerProvider {
 		fmt.Println("Error creating HTTP OTLP exporter: ", err)
 	}
 
+	res := resource.NewWithAttributes(
+		semconv.SchemaURL,
+		// the service name used to display traces in backends
+		semconv.ServiceNameKey.String("otel1-gin-gonic"),
+	)
+
 	idg := xray.NewIDGenerator()
 
 	tp := sdktrace.NewTracerProvider(
 		sdktrace.WithSampler(sdktrace.AlwaysSample()),
 		// sdktrace.WithBatcher(stdoutExporter),
+		sdktrace.WithResource(res),
 		sdktrace.WithBatcher(otlpExporter),
 		sdktrace.WithBatcher(otlpHTTPExporter),
 		sdktrace.WithIDGenerator(idg),
