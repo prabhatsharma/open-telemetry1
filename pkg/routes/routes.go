@@ -13,6 +13,8 @@ import (
 // SetRoutes sets up all gi HTTP API endpoints that can be called by front end
 func SetRoutes(r *gin.Engine) {
 
+	r.Use(gin.Logger())
+
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "DELETE", "PUT", "HEAD", "OPTIONS"},
