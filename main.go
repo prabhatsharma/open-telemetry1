@@ -70,8 +70,8 @@ func initTracer() *sdktrace.TracerProvider {
 	}
 
 	tp := sdktrace.NewTracerProvider(
-		// sdktrace.WithSampler(sdktrace.AlwaysSample()),
-		sdktrace.WithSampler(sdktrace.NeverSample()),
+		sdktrace.WithSampler(sdktrace.AlwaysSample()),
+		// sdktrace.WithSampler(sdktrace.NeverSample()),
 		// sdktrace.WithBatcher(stdoutExporter),
 		sdktrace.WithBatcher(otlpExporter),
 	)
