@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
+	"go.opentelemetry.io/contrib/propagators/aws/xray"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
 
@@ -85,11 +86,14 @@ func initTracer() *sdktrace.TracerProvider {
 		fmt.Println("Error creating HTTP OTLP exporter: ", err)
 	}
 
+	idg := xray.NewIDGenerator()
+
 	tp := sdktrace.NewTracerProvider(
 		sdktrace.WithSampler(sdktrace.AlwaysSample()),
 		// sdktrace.WithBatcher(stdoutExporter),
 		sdktrace.WithBatcher(otlpExporter),
 		sdktrace.WithBatcher(otlpHTTPExporter),
+		sdktrace.WithIDGenerator(idg),
 	)
 	otel.SetTracerProvider(tp)
 	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
