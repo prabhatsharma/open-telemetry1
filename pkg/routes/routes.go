@@ -26,6 +26,6 @@ func SetRoutes(r *gin.Engine) {
 	r.GET("/healthz", handlers.GetHealthz)
 	r.GET("/", handlers.Greeting)
 
-	r.POST("/api/ping", handlers.Ping)
+	r.GET("/api/ping", handlers.Ping)
 
 }
