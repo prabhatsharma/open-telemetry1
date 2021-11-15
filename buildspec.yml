@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/p6d6n2q4
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...          
+      - docker build -t otel1:latest .
+      - docker tag otel1:latest public.ecr.aws/p6d6n2q4/otel1:latest
+      - docker tag otel1:latest public.ecr.aws/p6d6n2q4/otel1:v$CODEBUILD_BUILD_NUMBER      
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push public.ecr.aws/p6d6n2q4/otel1:latest
+      - docker push public.ecr.aws/p6d6n2q4/otel1:v$CODEBUILD_BUILD_NUMBER
