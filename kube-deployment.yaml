@@ -51,10 +51,12 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
         - name: otel1
-          image: public.ecr.aws/p6d6n2q4/otel1:v6
+          image: public.ecr.aws/p6d6n2q4/otel1:v7
           env:
-            - name: OTEL_OTLP_ENDPOINT
+            - name: OTEL_OTLP_GRPC_ENDPOINT
               value: "localhost:4317"
+            - name: OTEL_OTLP_HTTP_ENDPOINT
+              value: "localhost:55681"
             - name: PORT
               value: "9876"
           # command: ["/bin/bash", "-c", "while true; do sleep 1; done"] # for debugging
@@ -74,6 +76,9 @@ spec:
           env:
             - name: AWS_REGION
               value: us-west-2
+          # command:
+          #   - /awscollector
+            # - --set=service.telemetry.logs.level=debug
           imagePullPolicy: Always
           resources:
             limits:

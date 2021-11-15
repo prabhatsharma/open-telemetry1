@@ -33,10 +33,10 @@ RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o otel1
 ############################
 # STEP 2 build a small image
 ############################
-# FROM public.ecr.aws/lts/ubuntu:latest
-# FROM public.ecr.aws/amazonlinux/amazonlinux:latest
+FROM public.ecr.aws/lts/ubuntu:latest
 # debugging
-FROM public.ecr.aws/bitnami/aws-cli:latest 
+# FROM public.ecr.aws/amazonlinux/amazonlinux:latest
+# FROM public.ecr.aws/bitnami/aws-cli:latest 
 # FROM scratch
 # Import the user and group files from the builder.
 COPY --from=builder /etc/passwd /etc/passwd

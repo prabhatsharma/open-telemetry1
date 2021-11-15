@@ -16,6 +16,7 @@ import (
 	"github.com/prabhatsharma/open-telemetry1/pkg/routes"
 	// "go.opentelemetry.io/otel/exporters/stdout/stdouttrace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
@@ -54,15 +55,26 @@ func initTracer() *sdktrace.TracerProvider {
 	// 	log.Fatal(err)
 	// }
 
-	OTEL_OTLP_ENDPOINT := os.Getenv("OTEL_OTLP_ENDPOINT")
+	OTEL_OTLP_GRPC_ENDPOINT := os.Getenv("OTEL_OTLP_GRPC_ENDPOINT")
 
-	if OTEL_OTLP_ENDPOINT == "" {
-		OTEL_OTLP_ENDPOINT = "localhost:4317"
+	if OTEL_OTLP_GRPC_ENDPOINT == "" {
+		OTEL_OTLP_GRPC_ENDPOINT = "localhost:4317"
+	}
+
+	OTEL_OTLP_HTTP_ENDPOINT := os.Getenv("OTEL_OTLP_HTTP_ENDPOINT")
+
+	if OTEL_OTLP_HTTP_ENDPOINT == "" {
+		OTEL_OTLP_GRPC_ENDPOINT = "localhost:55681"
 	}
 
 	otlpExporter, err := otlptracegrpc.New(context.TODO(),
 		otlptracegrpc.WithInsecure(),
-		otlptracegrpc.WithEndpoint(OTEL_OTLP_ENDPOINT),
+		otlptracegrpc.WithEndpoint(OTEL_OTLP_GRPC_ENDPOINT),
+	)
+
+	otlpHTTPExporter, err := otlptracehttp.New(context.TODO(),
+		otlptracegrpc.WithInsecure(),
+		otlptracegrpc.WithEndpoint(OTEL_OTLP_HTTP_ENDPOINT),
 	)
 
 	if err != nil {
@@ -71,9 +83,9 @@ func initTracer() *sdktrace.TracerProvider {
 
 	tp := sdktrace.NewTracerProvider(
 		sdktrace.WithSampler(sdktrace.AlwaysSample()),
-		// sdktrace.WithSampler(sdktrace.NeverSample()),
 		// sdktrace.WithBatcher(stdoutExporter),
 		sdktrace.WithBatcher(otlpExporter),
+		sdktrace.WithBatcher(otlpHTTPExporter),
 	)
 	otel.SetTracerProvider(tp)
 	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
