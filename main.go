@@ -72,13 +72,17 @@ func initTracer() *sdktrace.TracerProvider {
 		otlptracegrpc.WithEndpoint(OTEL_OTLP_GRPC_ENDPOINT),
 	)
 
+	if err != nil {
+		fmt.Println("Error creating GRPC OTLP exporter: ", err)
+	}
+
 	otlpHTTPExporter, err := otlptracehttp.New(context.TODO(),
-		otlptracegrpc.WithInsecure(),
-		otlptracegrpc.WithEndpoint(OTEL_OTLP_HTTP_ENDPOINT),
+		otlptracehttp.WithInsecure(),
+		otlptracehttp.WithEndpoint(OTEL_OTLP_HTTP_ENDPOINT),
 	)
 
 	if err != nil {
-		fmt.Println("Error creating OTLP exporter: ", err)
+		fmt.Println("Error creating HTTP OTLP exporter: ", err)
 	}
 
 	tp := sdktrace.NewTracerProvider(

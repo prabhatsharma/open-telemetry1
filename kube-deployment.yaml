@@ -51,7 +51,7 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
         - name: otel1
-          image: public.ecr.aws/p6d6n2q4/otel1:v7
+          image: public.ecr.aws/p6d6n2q4/otel1:v9
           env:
             - name: OTEL_OTLP_GRPC_ENDPOINT
               value: "localhost:4317"
