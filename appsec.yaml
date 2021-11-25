@@ -7,4 +7,3 @@ Resources:
         LoadBalancerInfo:
           ContainerName: "otel1"
           ContainerPort: 9876
-          
