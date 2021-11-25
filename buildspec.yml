@@ -18,3 +18,9 @@ phases:
       - echo Pushing the Docker image...
       - docker push public.ecr.aws/p6d6n2q4/otel1:latest
       - docker push public.ecr.aws/p6d6n2q4/otel1:v$CODEBUILD_BUILD_NUMBER
+      - echo pushing to private repo
+      - aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 525158249545.dkr.ecr.us-west-2.amazonaws.com
+      - docker tag otel1:latest 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:latest
+      - docker tag otel1:latest 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER
+      - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:latest
+      - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER
