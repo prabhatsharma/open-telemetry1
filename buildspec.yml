@@ -27,5 +27,8 @@ phases:
       - echo Writing image definitions file...
       - printf '[{"name":"otel1-private","imageUri":"%s"}]' 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER > imagedefinitions.json
 artifacts:
-    files: imagedefinitions.json
+    files: 
+    - imagedefinitions.json
+    - taskdef.json
+    - appsec.yaml
 
