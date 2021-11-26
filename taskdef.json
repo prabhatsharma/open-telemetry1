@@ -1,0 +1,48 @@
+{
+    "taskDefinitionArn": "arn:aws:ecs:us-west-2:525158249545:task-definition/otel1:5",
+    "containerDefinitions": [
+        {
+            "name": "otel1",
+            "image": "IMAGE_ADDRESS",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 9876,
+                    "hostPort": 9876,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "mountPoints": [],
+            "volumesFrom": []
+        }
+    ],
+    "family": "otel1",
+    "executionRoleArn": "arn:aws:iam::525158249545:role/ecsTasksExecutionRoleTF",
+    "networkMode": "awsvpc",
+    "revision": 5,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "registeredAt": "2021-11-25T12:06:05.483Z",
+    "registeredBy": "arn:aws:iam::525158249545:user/prabhat",
+    "tags": []
+}tas
