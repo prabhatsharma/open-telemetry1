@@ -24,3 +24,6 @@ phases:
       - docker tag otel1:latest 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER
       - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:latest
       - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER
+artifacts:
+    files: imagedefinitions.json
+
