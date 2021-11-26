@@ -15,7 +15,8 @@ phases:
   post_build:
     commands:
       - echo Build completed on `date`
-      - echo Pushing the Docker image...
+      - echo Pushing to public repo
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/p6d6n2q4
       - docker push public.ecr.aws/p6d6n2q4/otel1:latest
       - docker push public.ecr.aws/p6d6n2q4/otel1:v$CODEBUILD_BUILD_NUMBER
       - echo pushing to private repo
@@ -24,8 +25,8 @@ phases:
       - docker tag otel1:latest 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER
       - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:latest
       - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER
-      - echo Writing image definitions file...
-      - printf '[{"name":"otel1-private","imageUri":"%s"}]' 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER > imagedefinitions.json
+      - echo Writing image definitions file for codepipeline https://docs.aws.amazon.com/codepipeline/latest/userguide/file-reference.html...
+      - printf '[{"name":"otel1-private","imageUri":"%s"}]' 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER > imageDetail.json
 artifacts:
     files: 
     - imagedefinitions.json
