@@ -39,6 +39,5 @@
         "FARGATE"
     ],
     "cpu": "256",
-    "memory": "512",
-    "tags": []
+    "memory": "512"
 }
