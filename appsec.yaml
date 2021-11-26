@@ -3,7 +3,7 @@ Resources:
   - TargetService:
       Type: AWS::ECS::Service
       Properties:
-        TaskDefinition: "arn:aws:ecs:us-west-2:525158249545:task-definition/otel1:5"
+        TaskDefinition: <TASK_DEFINITION>
         LoadBalancerInfo:
           ContainerName: "otel1"
           ContainerPort: 9876
