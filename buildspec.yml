@@ -29,7 +29,7 @@ phases:
       - printf '[{"name":"otel1-private","imageUri":"%s"}]' 525158249545.dkr.ecr.us-west-2.amazonaws.com/otel1-private:v$CODEBUILD_BUILD_NUMBER > imageDetail.json
 artifacts:
     files: 
-    - imagedefinitions.json
+    - imageDetail.json
     - taskdef.json
     - appsec.yaml
 
