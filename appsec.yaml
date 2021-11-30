@@ -4,6 +4,7 @@ Resources:
       Type: AWS::ECS::Service
       Properties:
         TaskDefinition: <TASK_DEFINITION>
+        EnableExecuteCommand: true
         LoadBalancerInfo:
           ContainerName: "otel1"
           ContainerPort: 9876
