@@ -1,0 +1,86 @@
+# This is an example .goreleaser.yml file with some sensible defaults.
+# Make sure to check the documentation at https://goreleaser.com
+project_name: opentelemetry1
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+      - freebsd
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - "6"
+      - "7"
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+brews:
+  - name: zinc
+    tap:
+      owner: prabhatsharma
+      name: homebrew-tap
+      # token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    folder: Formula
+    homepage: "https://github.com/prabhatsharma/zinc"
+    description: "Zinc Search engine. A lightweight alternative to elasticsearch that requires minimal resources, written in Go."
+    license: "Apache-2.0"
+
+snapcrafts:
+  - id: opentelemetry1
+    name: opentelemetry1
+    summary: opentelemetry1 sample project
+    description: |
+      opentelemetry1 sample project explains how to instrument open telemetry
+
+    license: Apache-2.0
+    grade: stable
+    confinement: classic
+    base: core18
+
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+
+    # Whether to publish the snap to the snapcraft store.
+    # Remember you need to `snapcraft login` first.
+    # Defaults to false.
+    publish: false
+
+    # Channels in store where snap will be pushed.
+    # More info about channels here:
+    # https://snapcraft.io/docs/reference/channels
+    channel_templates:
+      - edge
+      - beta
+      - candidate
+      - stable
+      - "{{ .Major }}.{{ .Minor }}/edge"
+      - "{{ .Major }}.{{ .Minor }}/beta"
+      - "{{ .Major }}.{{ .Minor }}/candidate"
+      - "{{ .Major }}.{{ .Minor }}/stable"
