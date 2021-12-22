@@ -14,7 +14,10 @@
             "essential": true,
             "environment": [],
             "mountPoints": [],
-            "volumesFrom": []
+            "volumesFrom": [],
+            "linuxParameters": {
+                "initProcessEnabled": true
+            }
         }
     ],
     "family": "otel1",
@@ -39,5 +42,6 @@
         "FARGATE"
     ],
     "cpu": "256",
-    "memory": "512"
+    "memory": "512",
+    "taskRoleArn": "arn:aws:iam::525158249545:role/TaskAdmin"
 }
