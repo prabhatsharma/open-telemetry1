@@ -38,14 +38,14 @@ changelog:
       - "^docs:"
       - "^test:"
 brews:
-  - name: zinc
+  - name: opentelemetry1
     tap:
       owner: prabhatsharma
       name: homebrew-tap
       # token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     folder: Formula
-    homepage: "https://github.com/prabhatsharma/zinc"
-    description: "Zinc Search engine. A lightweight alternative to elasticsearch that requires minimal resources, written in Go."
+    homepage: "https://github.com/prabhatsharma/opentelemetry1"
+    description: "A sample open telemetry instrumented application"
     license: "Apache-2.0"
 
 snapcrafts:
@@ -70,7 +70,7 @@ snapcrafts:
     # Whether to publish the snap to the snapcraft store.
     # Remember you need to `snapcraft login` first.
     # Defaults to false.
-    publish: false
+    publish: true
 
     # Channels in store where snap will be pushed.
     # More info about channels here:
