@@ -70,7 +70,7 @@ snapcrafts:
     # Whether to publish the snap to the snapcraft store.
     # Remember you need to `snapcraft login` first.
     # Defaults to false.
-    publish: true
+    publish: false
 
     # Channels in store where snap will be pushed.
     # More info about channels here:
