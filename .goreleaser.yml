@@ -70,17 +70,17 @@ snapcrafts:
     # Whether to publish the snap to the snapcraft store.
     # Remember you need to `snapcraft login` first.
     # Defaults to false.
-    publish: false
+    publish: true
 
     # Channels in store where snap will be pushed.
     # More info about channels here:
     # https://snapcraft.io/docs/reference/channels
-    channel_templates:
-      - edge
-      - beta
-      - candidate
-      - stable
-      - "{{ .Major }}.{{ .Minor }}/edge"
-      - "{{ .Major }}.{{ .Minor }}/beta"
-      - "{{ .Major }}.{{ .Minor }}/candidate"
-      - "{{ .Major }}.{{ .Minor }}/stable"
+    # channel_templates:
+    #   - edge
+    #   - beta
+    #   - candidate
+    #   - stable
+    #   - "{{ .Major }}.{{ .Minor }}/edge"
+    #   - "{{ .Major }}.{{ .Minor }}/beta"
+    #   - "{{ .Major }}.{{ .Minor }}/candidate"
+    #   - "{{ .Major }}.{{ .Minor }}/stable"
