@@ -1,8 +1,8 @@
 ############################
 # STEP 1 build executable binary
 ############################
-# FROM golang:alpine AS builder
-FROM public.ecr.aws/bitnami/golang:latest as builder
+FROM golang:alpine AS builder
+# FROM public.ecr.aws/bitnami/golang:latest as builder
 # Install git.
 # Git is required for fetching the dependencies.
 RUN update-ca-certificates
