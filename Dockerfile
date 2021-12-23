@@ -19,7 +19,7 @@ RUN adduser \
     --no-create-home \    
     --uid "${UID}" \    
     "${USER}"
-WORKDIR $GOPATH/src/github.com/prabhatsharma/open-telemetry1/
+# WORKDIR $GOPATH/src/github.com/prabhatsharma/open-telemetry1/
 COPY . .
 # Fetch dependencies.
 # Using go get.
