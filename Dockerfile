@@ -19,17 +19,19 @@ RUN adduser \
     --no-create-home \    
     --uid "${UID}" \    
     "${USER}"
-# WORKDIR $GOPATH/src/github.com/prabhatsharma/open-telemetry1/
+WORKDIR $GOPATH/src/github.com/prabhatsharma/open-telemetry1/
 COPY . .
 # Fetch dependencies.
 # Using go get.
+RUN pwd
+RUN ls -alh
 RUN go get -d -v
 # Using go mod.
 # RUN go mod download
 # RUN go mod verify
 # Build the binary.
 # to tackle error standard_init_linux.go:207: exec user process caused "no such file or directory" set CGO_ENABLED=0   
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o otel1
+RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o otel1
 ############################
 # STEP 2 build a small image
 ############################

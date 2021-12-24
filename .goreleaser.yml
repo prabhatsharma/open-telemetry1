@@ -20,6 +20,9 @@ builds:
     goarm:
       - "6"
       - "7"
+release:
+  draft: false
+  prerelease: "false"
 archives:
   - replacements:
       darwin: Darwin
@@ -39,8 +42,70 @@ changelog:
       - "^test:"
 dockers:
   - image_templates:
-    - hiprabhat/opentelemetry1
+      - hiprabhat/opentelemetry1:{{ .Version }}-amd64
     use: buildx
+    skip_push: "false"
+    build_flag_templates:
+    - "--platform=linux/amd64"
+    extra_files:
+      - go.mod
+      - go.sum
+      - pkg
+      - main.go
+  - image_templates:
+      - hiprabhat/opentelemetry1:{{ .Version }}-arm64v8
+    use: buildx
+    skip_push: "false"
+    build_flag_templates:
+    - "--platform=linux/arm64/v8"
+    extra_files:
+      - go.mod
+      - go.sum
+      - pkg
+      - main.go
+  - image_templates:
+      - hiprabhat/opentelemetry1:{{ .Version }}-arm64v7 
+    use: buildx
+    skip_push: "false"
+    build_flag_templates:
+    - "--platform=linux/arm/v7"
+    extra_files:
+      - go.mod
+      - go.sum
+      - pkg
+      - main.go
+docker_manifests:
+  # You can have multiple Docker manifests.
+-
+  # ID of the manifest, needed if you want to filter by it later on (e.g. on custom publishers).
+  id: opentelemetry1
+
+  # Name template for the manifest.
+  # Defaults to empty.
+  name_template: hiprabhat/opentelemetry1:{{ .Version }}
+
+  # Image name templates to be added to this manifest.
+  # Defaults to empty.
+  image_templates:
+  - hiprabhat/opentelemetry1:{{ .Version }}-amd64
+  - hiprabhat/opentelemetry1:{{ .Version }}-arm64v8
+  - hiprabhat/opentelemetry1:{{ .Version }}-armv7
+
+  # Extra flags to be passed down to the manifest create command.
+  # Defaults to empty.
+  create_flags:
+  - --insecure
+
+  # Extra flags to be passed down to the manifest push command.
+  # Defaults to empty.
+  push_flags:
+  - --insecure
+
+  # Defaults to false.
+  skip_push: "false"
+
+
+
 brews:
   - name: opentelemetry1
     tap:
