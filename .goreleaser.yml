@@ -53,7 +53,40 @@ dockers:
       - pkg
       - main.go
   - image_templates:
-      - hiprabhat/opentelemetry1:{{ .Version }}-arm64v8
+      - hiprabhat/opentelemetry1:latest-arm64
+    use: buildx
+    skip_push: "false"
+    build_flag_templates:
+    - "--platform=linux/arm64/v8"
+    extra_files:
+      - go.mod
+      - go.sum
+      - pkg
+      - main.go
+  - image_templates:
+      - hiprabhat/opentelemetry1:latest-armv7 
+    use: buildx
+    skip_push: "false"
+    build_flag_templates:
+    - "--platform=linux/arm/v7"
+    extra_files:
+      - go.mod
+      - go.sum
+      - pkg
+      - main.go
+  - image_templates:
+      - hiprabhat/opentelemetry1:latest-amd64
+    use: buildx
+    skip_push: "false"
+    build_flag_templates:
+    - "--platform=linux/amd64"
+    extra_files:
+      - go.mod
+      - go.sum
+      - pkg
+      - main.go
+  - image_templates:
+      - hiprabhat/opentelemetry1:{{ .Version }}-arm64
     use: buildx
     skip_push: "false"
     build_flag_templates:
@@ -75,10 +108,7 @@ dockers:
       - pkg
       - main.go
 docker_manifests:
-  # You can have multiple Docker manifests.
--
-  # ID of the manifest, needed if you want to filter by it later on (e.g. on custom publishers).
-  id: opentelemetry1
+- id: opentelemetry1
 
   # Name template for the manifest.
   # Defaults to empty.
@@ -88,22 +118,20 @@ docker_manifests:
   # Defaults to empty.
   image_templates:
   - hiprabhat/opentelemetry1:{{ .Version }}-amd64
-  - hiprabhat/opentelemetry1:{{ .Version }}-arm64v8
+  - hiprabhat/opentelemetry1:{{ .Version }}-arm64
   - hiprabhat/opentelemetry1:{{ .Version }}-armv7
+- id: opentelemetry1-latest
 
-  # Extra flags to be passed down to the manifest create command.
+  # Name template for the manifest.
   # Defaults to empty.
-  create_flags:
-  - --insecure
+  name_template: hiprabhat/opentelemetry1:latest
 
-  # Extra flags to be passed down to the manifest push command.
+  # Image name templates to be added to this manifest.
   # Defaults to empty.
-  push_flags:
-  - --insecure
-
-  # Defaults to false.
-  skip_push: "false"
-
+  image_templates:
+  - hiprabhat/opentelemetry1:latest-amd64
+  - hiprabhat/opentelemetry1:latest-arm64
+  - hiprabhat/opentelemetry1:latest-armv7
 
 
 brews:
